@@ -7,7 +7,7 @@ export default function Home() {
   const [loggedIn, setLoggedIn] = useState<string | null>();
 
   useEffect(() => {
-    setLoggedIn(loggedIn as string | null);
+    setLoggedIn(localStorage.getItem('loggedIn') as string | null);
   }, []);
 
   const router = useRouter();
