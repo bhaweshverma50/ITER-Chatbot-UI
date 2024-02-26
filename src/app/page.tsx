@@ -8,7 +8,7 @@ export default function Home() {
 
   useEffect(() => {
     setLoggedIn(loggedIn as string | null);
-  }, [loggedIn]);
+  }, []);
 
   const router = useRouter();
   useEffect(() => {
