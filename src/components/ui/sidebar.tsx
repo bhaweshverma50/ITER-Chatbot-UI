@@ -17,7 +17,7 @@ export const Sidebar = ({
     <div className="flex flex-col gap-5">
       <div className="flex flex-col h-full p-5 bg-slate-200">
         <div className="flex flex-col my-5">
-          <Image src={'/iter.png'} alt="Logo" className="logo" width={120} height={120} />
+          <Image src={'/iter.png'} alt="Logo" className="logo" width={120} height={120} quality={80} />
           <div className="text-xs my-1">
             <span>For ITER Data</span>
             <span className="italic"> Active Queries</span>

@@ -29,7 +29,15 @@ const ChatSection = ({
           <div key={i} className={message.isBot ? 'chat chat-start' : 'chat chat-end'}>
             <div className="chat-image avatar">
               <div className="w-10 rounded-full">
-                <Image src={message.isBot ? 'chatgptLogo.svg' : '/user-Icon.png'} alt="logo" width={20} height={20} />
+                {message.isBot ? (
+                  <Image src="chatgptLogo.svg" alt="logo" width={20} height={20} quality={90} />
+                ) : (
+                  <div className="avatar placeholder">
+                    <div className="bg-orange-300 rounded-full w-10 border border-orange-500">
+                      <span className="text-xl">U</span>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
             <p className={message.isBot ? 'chat-bubble' : 'chat-bubble chat-bubble-info'}>{message.text}</p>
