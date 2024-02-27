@@ -46,6 +46,9 @@ const Chat = () => {
     setLoading(false);
     if (res.ok) {
       const data = await res.json();
+      data.metadata.author = JSON.parse(data.metadata.author);
+      data.metadata.lastChangeUser = JSON.parse(data.metadata.lastChangeUser);
+      data.metadata.parent_content = JSON.parse(data.metadata.parent_content);
       const botResponse = { text: data.result.split('\n')[0], isBot: true, metadata: data.metadata };
       const updatedMessagesWithBotResponse = [...updatedMessages, botResponse];
       setMessages(updatedMessagesWithBotResponse);
