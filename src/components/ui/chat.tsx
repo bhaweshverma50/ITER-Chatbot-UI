@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 import { Button } from './button';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const ChatSection = ({
   input,
@@ -40,7 +41,29 @@ const ChatSection = ({
                 )}
               </div>
             </div>
-            <p className={message.isBot ? 'chat-bubble' : 'chat-bubble chat-bubble-info'}>{message.text}</p>
+            <p className={message.isBot ? 'chat-bubble flex flex-col gap-2' : 'chat-bubble chat-bubble-info'}>
+              {message.text}
+              {message.isBot && message.metadata ? (
+                <div className="pb-1">
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger className="text-xs text-slate-400 bg-slate-600 px-2 py-1 rounded-full">
+                        metadata
+                      </TooltipTrigger>
+                      <TooltipContent side="bottom">
+                        <p>Doc ID: {message.metadata.uid}</p>
+                        <p>Title: {message.metadata.title}</p>
+                        <p>Reference: {message.metadata.reference_text}</p>
+                        <p>Author: {message.metadata.author.uid}</p>
+                        <p>Creation Date: {new Date(message.metadata.creation_date).toLocaleString()}</p>
+                        <p>Last Change User: {message.metadata.lastChangeUser.uid}</p>
+                        <p>Last Change Date: {new Date(message.metadata.lastChangeDate).toLocaleString()}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
+              ) : null}
+            </p>
           </div>
         ))}
         <div ref={msgEnd} />

@@ -14,6 +14,7 @@ const Chat = () => {
     {
       text: "Hello! I'm your friendly chatbot assistant. How can I help you today? Whether you have questions, need information, or just want to chat, feel free to ask. I'm here to assist you with any information or tasks you have in mind. What can I do for you?",
       isBot: true,
+      metadata: null,
     },
   ]);
 
@@ -28,7 +29,7 @@ const Chat = () => {
     setLoading(true);
     const text = input;
     setInput('');
-    const newMessage = { text, isBot: false };
+    const newMessage = { text, isBot: false, metadata: null };
     const updatedMessages = [...messages, newMessage];
     setMessages(updatedMessages);
 
@@ -45,7 +46,11 @@ const Chat = () => {
     setLoading(false);
     if (res.ok) {
       const data = await res.json();
-      const botResponse = { text: data.result, isBot: true };
+      const botResponse = { text: data.result.split('\n')[0], isBot: true, metadata: data.metadata };
+      const updatedMessagesWithBotResponse = [...updatedMessages, botResponse];
+      setMessages(updatedMessagesWithBotResponse);
+    } else {
+      const botResponse = { text: 'Sorry, an error occurred. Please try again later.', isBot: true, metadata: null };
       const updatedMessagesWithBotResponse = [...updatedMessages, botResponse];
       setMessages(updatedMessagesWithBotResponse);
     }
@@ -59,7 +64,7 @@ const Chat = () => {
     if (loading) return;
     setLoading(true);
     const text = (e.target as HTMLInputElement).innerText;
-    setMessages([...messages, { text, isBot: false }]);
+    setMessages([...messages, { text, isBot: false, metadata: null }]);
     const res = await fetch('https://poc-chatbot-iter-backend-ver1.azurewebsites.net/query_v1', {
       method: 'POST',
       headers: {
@@ -73,7 +78,18 @@ const Chat = () => {
     setLoading(false);
     if (res.ok) {
       const data = await res.json();
-      setMessages([...messages, { text, isBot: false }, { text: data.result, isBot: true }]);
+      data.metadata.author = JSON.parse(data.metadata.author);
+      data.metadata.lastChangeUser = JSON.parse(data.metadata.lastChangeUser);
+      data.metadata.parent_content = JSON.parse(data.metadata.parent_content);
+
+      setMessages([
+        ...messages,
+        { text, isBot: false, metadata: data.metadata },
+        { text: data.result.split('\n')[0], isBot: true, metadata: data.metadata },
+      ]);
+    } else {
+      const botResponse = { text: 'Sorry, an error occurred. Please try again later.', isBot: true, metadata: null };
+      setMessages([...messages, { text, isBot: false, metadata: null }, botResponse]);
     }
   };
 
