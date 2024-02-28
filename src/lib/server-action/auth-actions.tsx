@@ -1,6 +1,4 @@
-'use server';
-
-import { cookies } from 'next/headers';
+'use client';
 import { FormSchema } from '../types';
 import { z } from 'zod';
 
