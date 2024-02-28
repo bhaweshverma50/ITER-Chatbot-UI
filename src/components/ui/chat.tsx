@@ -56,8 +56,12 @@ const ChatSection = ({
                         <p>Reference: {message.metadata.reference_text}</p>
                         <p>Author: {message.metadata.author.uid}</p>
                         <p>Creation Date: {new Date(message.metadata.creation_date).toLocaleString()}</p>
-                        <p>Last Change User: {message.metadata.lastChangeUser.uid}</p>
-                        <p>Last Change Date: {new Date(message.metadata.lastChangeDate).toLocaleString()}</p>
+                        <p>
+                          Last Updated: {new Date(message.metadata.lastChangeDate).toLocaleString()} by{' '}
+                          {message.metadata.lastChangeUser.uid}
+                        </p>
+                        {/* <p>Last Change User: {message.metadata.lastChangeUser.uid}</p>
+                        <p>Last Change Date: {new Date(message.metadata.lastChangeDate).toLocaleString()}</p> */}
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
@@ -88,9 +92,9 @@ const ChatSection = ({
           </Button>
         </div>
 
-        <span className="text-xs text-center text-slate-500">
+        {/* <span className="text-xs text-center text-slate-500">
           ChatGPT can make mistakes. Consider checking important information.
-        </span>
+        </span> */}
       </div>
     </div>
   );
