@@ -33,7 +33,7 @@ const Chat = () => {
     const updatedMessages = [...messages, newMessage];
     setMessages(updatedMessages);
 
-    const res = await fetch('https://poc-chatbot-iter-backend-ver1.azurewebsites.net/query_v1', {
+    const res = await fetch('https://poc-chatbot-iter-backend-ver1.azurewebsites.net/query_v3', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ const Chat = () => {
     setLoading(true);
     const text = (e.target as HTMLInputElement).innerText;
     setMessages([...messages, { text, isBot: false, metadata: null }]);
-    const res = await fetch('https://poc-chatbot-iter-backend-ver1.azurewebsites.net/query_v1', {
+    const res = await fetch('https://poc-chatbot-iter-backend-ver1.azurewebsites.net/query_v3', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
